@@ -18,6 +18,9 @@ function writingForLocalStorage(e) {
 }
 
 function btnSubmitClick(e) {
+  if (formEl.email.value === '' || formEl.message.value === '') {
+    return alert('All form fields must be filled out!');
+  }
   e.preventDefault();
   formEl.reset();
   console.log(localStorageDataOfForm);
