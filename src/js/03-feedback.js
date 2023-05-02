@@ -35,4 +35,5 @@ function reloadPageClicking() {
     formEl.email.value = savingParametrsOfForm.email || '';
     formEl.message.value = savingParametrsOfForm.message || '';
   }
+  formEl.email.value = '';
 }
