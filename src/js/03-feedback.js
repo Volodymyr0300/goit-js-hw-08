@@ -10,11 +10,10 @@ formEl.addEventListener('submit', btnSubmitClick);
 reloadPageClicking();
 
 function writingForLocalStorage(e) {
+  const currentData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || {};
+  currentData[e.target.name] = e.target.value;
   localStorageDataOfForm[e.target.name] = e.target.value;
-  localStorage.setItem(
-    LOCAL_STORAGE_KEY,
-    JSON.stringify(localStorageDataOfForm)
-  );
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(currentData));
 }
 
 function btnSubmitClick(e) {
@@ -22,18 +21,20 @@ function btnSubmitClick(e) {
     return alert('All form fields must be filled out!');
   }
   e.preventDefault();
-  formEl.reset();
   console.log(localStorageDataOfForm);
+  formEl.reset();
   localStorage.removeItem(LOCAL_STORAGE_KEY);
 }
 
 function reloadPageClicking() {
-  const savingParametrsOfForm = JSON.parse(
-    localStorage.getItem(LOCAL_STORAGE_KEY)
-  );
-  if (savingParametrsOfForm) {
-    formEl.email.value = savingParametrsOfForm.email || '';
-    formEl.message.value = savingParametrsOfForm.message || '';
+  const savedData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+  if (savedData) {
+    formEl.email.value = savedData.email || '';
+    formEl.message.value = savedData.message || '';
+    localStorageDataOfForm.email = savedData.email || '';
+    localStorageDataOfForm.message = savedData.message || '';
+  } else {
+    formEl.email.value = '';
+    formEl.message.value = '';
   }
-  formEl.email.value = '';
 }
